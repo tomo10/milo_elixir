@@ -7,6 +7,11 @@ defmodule MiloWeb.Router do
 
   scope "/api", MiloWeb do
     pipe_through :api
+    forward("/", Absinthe.Plug, schema: MiloWeb.Schema)
+  end
+
+  scope "/gql" do
+    forward "/GraphiQL", Absinthe.Plug.GraphiQL, schema: MiloWeb.Schema
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
