@@ -1,0 +1,1 @@
+alias Milo.Workouts.{Exercise}

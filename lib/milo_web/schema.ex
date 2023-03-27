@@ -15,11 +15,22 @@ defmodule MiloWeb.Schema do
   }
 
   query do
-    field :exercise_info, :exercise do
+    field :get_exercise, :exercise do
       arg(:id, non_null(:id))
 
-      resolve(fn %{id: exercise_id}, _ ->
-        {:ok, @exercise_information[exercise_id]}
+      resolve(fn args, _ ->
+        {:ok, Milo.Exercise.get_info!(args)}
+      end)
+    end
+  end
+
+  mutation do
+    field :create_exercise, :exercise do
+      arg(:name, non_null(:string))
+      arg(:body_part, non_null(:string))
+
+      resolve(fn args, _ ->
+        {:ok, Milo.Exercise.create_info(args)}
       end)
     end
   end
