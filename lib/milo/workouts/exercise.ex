@@ -15,6 +15,6 @@ defmodule Milo.Workouts.Exercise do
   def changeset(exercise, attrs) do
     required_fields = [:name, :body_part]
 
-    exercise |> cast(attrs, required_fields)
+    exercise |> cast(attrs, required_fields) |> validate_required(required_fields)
   end
 end

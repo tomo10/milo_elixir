@@ -6,51 +6,51 @@ defmodule Milo.Exercise do
   import Ecto.Query, warn: false
   alias Milo.Repo
 
-  alias Milo.Exercise.Info
+  alias Milo.Workouts.Exercise
 
   @doc """
-  Returns the list of information.
+  Returns the list of exercises.
 
   ## Examples
 
-      iex> list_information()
-      [%Info{}, ...]
+      iex> list_exercises()
+      [%Exercises{}, ...]
 
   """
-  def list_information do
-    Repo.all(Info)
+  def list_exercises do
+    Repo.all(Exercise)
   end
 
   @doc """
-  Gets a single info.
+  Gets a single exercise.
 
-  Raises `Ecto.NoResultsError` if the Info does not exist.
+  Raises `Ecto.NoResultsError` if the exercise does not exist.
 
   ## Examples
 
-      iex> get_info!(123)
+      iex> get_exercise!(123)
       %Info{}
 
-      iex> get_info!(456)
+      iex> get_exercise!(456)
       ** (Ecto.NoResultsError)
 
   """
   def get_info!(id), do: Repo.get!(Info, id)
 
   @doc """
-  Creates a info.
+  Creates an exercise.
 
   ## Examples
 
-      iex> create_info(%{field: value})
-      {:ok, %Info{}}
+      iex> create_exercise(%{field: value})
+      {:ok, %Exercise{}}
 
-      iex> create_info(%{field: bad_value})
+      iex> create_exercise(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_info(attrs \\ %{}) do
-    %Info{}
+  def create_exercise(attrs \\ %{}) do
+    %Exercise{}
     |> Info.changeset(attrs)
     |> Repo.insert()
   end
@@ -60,16 +60,16 @@ defmodule Milo.Exercise do
 
   ## Examples
 
-      iex> update_info(info, %{field: new_value})
-      {:ok, %Info{}}
+      iex> update_exercise(exercise, %{field: new_value})
+      {:ok, %Exercise{}}
 
-      iex> update_info(info, %{field: bad_value})
+      iex> update_exercise(exercise, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_info(%Info{} = info, attrs) do
-    info
-    |> Info.changeset(attrs)
+  def update_exercise(%Exercise{} = exercise, attrs) do
+    exercise
+    |> Exercise.changeset(attrs)
     |> Repo.update()
   end
 
@@ -78,27 +78,27 @@ defmodule Milo.Exercise do
 
   ## Examples
 
-      iex> delete_info(info)
-      {:ok, %Info{}}
+      iex> delete_exercise(exercise)
+      {:ok, %Exercise{}}
 
-      iex> delete_info(info)
+      iex> delete_exercise(exercise)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_info(%Info{} = info) do
-    Repo.delete(info)
+  def delete_exercise(%Exercise{} = exercise) do
+    Repo.delete(exercise)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking info changes.
+  Returns an `%Ecto.Changeset{}` for tracking exercise changes.
 
   ## Examples
 
-      iex> change_info(info)
-      %Ecto.Changeset{data: %Info{}}
+      iex> change_exercise(exercise)
+      %Ecto.Changeset{data: %Exercise{}}
 
   """
-  def change_info(%Info{} = info, attrs \\ %{}) do
-    Info.changeset(info, attrs)
+  def change_exercise(%Exercise{} = exercise, attrs \\ %{}) do
+    Exercise.changeset(exercise, attrs)
   end
 end
