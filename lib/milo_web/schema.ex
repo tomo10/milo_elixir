@@ -19,7 +19,7 @@ defmodule MiloWeb.Schema do
       arg(:id, non_null(:id))
 
       resolve(fn args, _ ->
-        {:ok, Milo.Exercise.get_info!(args)}
+        {:ok, Milo.Workouts.get_exercise!(args)}
       end)
     end
   end
@@ -30,7 +30,7 @@ defmodule MiloWeb.Schema do
       arg(:body_part, non_null(:string))
 
       resolve(fn args, _ ->
-        {:ok, Milo.Exercise.create_info(args)}
+        {:ok, Milo.Workouts.create_exercise(args)}
       end)
     end
   end

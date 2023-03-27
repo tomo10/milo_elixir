@@ -1,4 +1,4 @@
-defmodule Milo.Repo.Migrations.CreateInformation do
+defmodule Milo.Repo.Migrations.CreateExercises do
   use Ecto.Migration
 
   def change do

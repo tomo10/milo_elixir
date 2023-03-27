@@ -47,7 +47,9 @@ defmodule Milo.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:absinthe, "~> 1.7"},
-      {:absinthe_plug, "~> 1.5"}
+      {:absinthe_plug, "~> 1.5"},
+      {:pbkdf2_elixir, "2.1.0"},
+      {:dataloader, "~> 1.0.10"}
     ]
   end
 
