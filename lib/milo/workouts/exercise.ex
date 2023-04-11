@@ -9,6 +9,8 @@ defmodule Milo.Workouts.Exercise do
     field :name, :string
     field :body_part, :string
 
+    has_many :sets, Milo.Workouts.Set
+
     timestamps()
   end
 

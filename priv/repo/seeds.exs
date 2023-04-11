@@ -10,7 +10,7 @@
 # mix ecto reset to reset everthing
 
 alias Milo.Repo
-alias Milo.Workouts.{Exercise}
+alias Milo.Workouts.{Exercise, Set, Round, Workout}
 alias Milo.Gyms.{Booking}
 alias Milo.Accounts.{User}
 
@@ -58,6 +58,7 @@ ex1 =
   |> Exercise.changeset(%{
     name: "Bench Press",
     body_part: "Chest"
+    # sets: [set1, set2, set3]
   })
   |> Repo.insert!()
 
@@ -74,5 +75,66 @@ ex3 =
   |> Exercise.changeset(%{
     name: "Military Press",
     body_part: "Deltoids"
+  })
+  |> Repo.insert!()
+
+#
+# WORKOUT
+#
+
+wk1 =
+  %Workout{}
+  |> Workout.changeset(%{
+    name: "Chest Day",
+    user_id: tomo.id,
+    start_date: DateTime.from_naive!(~N[2019-03-21 09:00:00], "Etc/UTC"),
+    notes: "I felt really good today"
+  })
+  |> Repo.insert!()
+
+#
+# ROUND
+#
+
+rd1 =
+  %Round{}
+  |> Round.changeset(%{
+    rest: 60,
+    workout_id: wk1.id
+    # sets: [set1, set2, set3]
+  })
+  |> Repo.insert!()
+
+#
+# SETS
+#
+
+set1 =
+  %Set{}
+  |> Set.changeset(%{
+    reps: 5,
+    weight: 100,
+    exercise_id: ex1.id,
+    round_id: 1
+  })
+  |> Repo.insert!()
+
+set2 =
+  %Set{}
+  |> Set.changeset(%{
+    reps: 6,
+    weight: 90,
+    exercise_id: ex1.id,
+    round_id: 1
+  })
+  |> Repo.insert!()
+
+set3 =
+  %Set{}
+  |> Set.changeset(%{
+    reps: 8,
+    weight: 80,
+    exercise_id: ex1.id,
+    round_id: 1
   })
   |> Repo.insert!()

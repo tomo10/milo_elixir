@@ -1,10 +1,37 @@
 defmodule MiloWeb.Schema do
   use Absinthe.Schema
+  import_types(Absinthe.Type.Custom)
 
   @desc "An Exercise"
   object :exercise do
-    field :name, :string
-    field :body_part, :string
+    field :name, non_null(:string)
+    field :body_part, non_null(:string)
+  end
+
+  @desc "A Set"
+  object :set do
+    field :weight, non_null(:integer)
+    field :reps, non_null(:integer)
+  end
+
+  @desc "A Round"
+  object :round do
+    field :rest, non_null(:integer)
+    field :sets, list_of(:set)
+  end
+
+  @desc "A Workout"
+  object :workout do
+    field :name, non_null(:string)
+    field :start_date, non_null(:date)
+    field :notes, non_null(:string)
+    field :rounds, list_of(:round)
+  end
+
+  @desc "A User"
+  object :user do
+    field :name, non_null(:string)
+    field :workouts, list_of(:workout)
   end
 
   # Example data

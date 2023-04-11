@@ -1,12 +1,12 @@
 defmodule Milo.Workouts do
   @moduledoc """
-  The Workouts context.
+  The Workouts context: public interface for finding, creating, updating, and deleting workouts.
   """
 
   import Ecto.Query, warn: false
   alias Milo.Repo
 
-  alias Milo.Workouts.Exercise
+  alias Milo.Workouts.{Exercise, Workout}
 
   @doc """
   Returns the list of exercises.
@@ -19,6 +19,10 @@ defmodule Milo.Workouts do
   """
   def list_exercises do
     Repo.all(Exercise)
+  end
+
+  def list_workouts do
+    Repo.all(Workout)
   end
 
   @doc """
@@ -56,7 +60,7 @@ defmodule Milo.Workouts do
   end
 
   @doc """
-  Updates a info.
+  Updates an exercise.
 
   ## Examples
 
@@ -74,7 +78,7 @@ defmodule Milo.Workouts do
   end
 
   @doc """
-  Deletes a info.
+  Deletes an exercise.
 
   ## Examples
 
