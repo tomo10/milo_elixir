@@ -6,9 +6,6 @@ defmodule Milo.Workouts.Set do
     field :weight, :integer
     field :reps, :integer
 
-    # this belongs to could be wrong
-    # could be
-    # has_one :exercise, Milo.Workouts.Exercise
     belongs_to :exercise, Milo.Workouts.Exercise
     belongs_to :round, Milo.Workouts.Round
 

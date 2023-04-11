@@ -6,6 +6,7 @@ defmodule MiloWeb.Schema do
   object :exercise do
     field :name, non_null(:string)
     field :body_part, non_null(:string)
+    field :sets, list_of(:set)
   end
 
   @desc "A Set"

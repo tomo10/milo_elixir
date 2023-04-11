@@ -1,6 +1,6 @@
 defmodule Milo.Workouts do
   @moduledoc """
-  The Workouts context: public interface for finding, creating, updating, and deleting workouts.
+  The Workouts context: public interface for finding, creating, updating, and deleting workouts / sets / rounds / exercises.
   """
 
   import Ecto.Query, warn: false

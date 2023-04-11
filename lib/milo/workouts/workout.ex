@@ -7,7 +7,7 @@ defmodule Milo.Workouts.Workout do
     field :start_date, :date
     field :notes, :string
 
-    belongs_to :user, Milo.Accounts.User
+    # belongs_to :user, Milo.Accounts.User
     has_many :rounds, Milo.Workouts.Round
 
     timestamps()
@@ -19,6 +19,7 @@ defmodule Milo.Workouts.Workout do
     workout
     |> cast(attrs, required_fields)
     |> validate_required(required_fields)
-    |> assoc_constraint(:user)
+
+    # |> assoc_constraint(:user)
   end
 end
