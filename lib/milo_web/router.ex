@@ -3,8 +3,10 @@ defmodule MiloWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug MiloWeb.Plugs.SetCurrentUser
   end
 
+  # this stuff explained 7.00 min of GQL prag prog video
   scope "/api", MiloWeb do
     pipe_through :api
     forward("/", Absinthe.Plug, schema: MiloWeb.Schema)

@@ -11,6 +11,15 @@ defmodule MiloWeb.Schema do
         {:ok, Milo.Workouts.get_exercise!(id)}
       end)
     end
+
+    @desc "Get all exercises"
+    field :exercises, list_of(:exercise) do
+      arg(:limit, :integer, default_value: 10)
+
+      resolve(fn _, args, _ ->
+        {:ok, Milo.Workouts.list_exercises(args)}
+      end)
+    end
   end
 
   mutation do

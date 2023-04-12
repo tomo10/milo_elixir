@@ -9,17 +9,31 @@ defmodule Milo.Workouts do
   alias Milo.Workouts.{Exercise, Workout}
 
   @doc """
-  Returns the list of exercises.
+  Returns a list of exercises matching the given `criteria`.
+
+  Example Criteria:
+
+  [{:limit, 15}, {:order, :asc}, {:filter, [{:matching, "lake"}, {:wifi, true}, {:guest_count, 3}]}]
+  """
+  def list_exercises(criteria) do
+    query = from(e in Exercise)
+
+    Enum.reduce(criteria, query, fn
+      {:limit, limit}, query ->
+        from e in query, limit: ^limit
+    end)
+    |> Repo.all()
+  end
+
+  @doc """
+  Returns the list of workouts.
 
   ## Examples
 
       iex> list_exercises()
-      [%Exercises{}, ...]
+      [%Workouts{}, ...]
 
   """
-  def list_exercises do
-    Repo.all(Exercise)
-  end
 
   def list_workouts do
     Repo.all(Workout)
