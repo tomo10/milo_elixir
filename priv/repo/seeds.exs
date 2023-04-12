@@ -99,7 +99,6 @@ wk1 =
   %Workout{}
   |> Workout.changeset(%{
     name: "Chest Day",
-    # user: tomo,
     start_date: DateTime.from_naive!(~N[2019-03-21 09:00:00], "Etc/UTC"),
     notes: "I felt really good today",
     rounds: [
