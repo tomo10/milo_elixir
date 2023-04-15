@@ -4,9 +4,10 @@ defmodule Milo.Workouts do
   """
 
   import Ecto.Query, warn: false
+  alias Milo.Workouts.Round
   alias Milo.Repo
 
-  alias Milo.Workouts.{Exercise, Workout}
+  alias Milo.Workouts.{Exercise, Workout, Set}
 
   @doc """
   Returns a list of exercises matching the given `criteria`.
@@ -55,6 +56,12 @@ defmodule Milo.Workouts do
   """
   def get_exercise!(id), do: Repo.get!(Exercise, id)
 
+  def get_round!(id), do: Repo.get!(Round, id)
+
+  def get_set!(id), do: Repo.get!(Set, id)
+
+  def get_workout!(id), do: Repo.get!(Workout, id)
+
   @doc """
   Creates an exercise.
 
@@ -70,6 +77,12 @@ defmodule Milo.Workouts do
   def create_exercise(attrs \\ %{}) do
     %Exercise{}
     |> Exercise.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_set(attrs \\ %{}) do
+    %Set{}
+    |> Set.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -118,5 +131,17 @@ defmodule Milo.Workouts do
   """
   def change_exercise(%Exercise{} = exercise, attrs \\ %{}) do
     Exercise.changeset(exercise, attrs)
+  end
+
+  def rounds_for_workout(%Workout{} = workout) do
+    Round
+    |> where(workout_id: ^workout.id)
+    |> Repo.all()
+  end
+
+  def sets_for_round(%Round{} = round) do
+    Set
+    |> where(round_id: ^round.id)
+    |> Repo.all()
   end
 end

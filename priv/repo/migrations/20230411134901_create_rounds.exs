@@ -5,7 +5,7 @@ defmodule Milo.Repo.Migrations.CreateRounds do
     create table(:rounds) do
       add :rest, :integer
 
-      add :workout_id, references(:workouts, on_delete: :delete_all), null: false
+      add :workout_id, references(:workouts), null: false
 
       timestamps()
     end

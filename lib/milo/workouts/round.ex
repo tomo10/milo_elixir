@@ -18,5 +18,7 @@ defmodule Milo.Workouts.Round do
     |> cast(attrs, required_fields)
     |> validate_required(required_fields)
     |> assoc_constraint(:workout)
+
+    # |> foreign_key_constraint(:workout_id)
   end
 end

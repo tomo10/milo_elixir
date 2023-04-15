@@ -57,21 +57,21 @@ ex1 =
   %Exercise{}
   |> Exercise.changeset(%{
     name: "Bench Press",
-    body_part: "Chest",
-    sets: [
-      %Set{
-        reps: 5,
-        weight: 100
-      },
-      %Set{
-        reps: 6,
-        weight: 90
-      },
-      %Set{
-        reps: 8,
-        weight: 80
-      }
-    ]
+    body_part: "Chest"
+    # sets: [
+    #   %Set{
+    #     reps: 5,
+    #     weight: 100
+    #   },
+    #   %Set{
+    #     reps: 6,
+    #     weight: 90
+    #   },
+    #   %Set{
+    #     reps: 8,
+    #     weight: 80
+    #   }
+    # ]
   })
   |> Repo.insert!()
 
@@ -92,52 +92,83 @@ ex3 =
   |> Repo.insert!()
 
 #
+# ROUNDS
+#
+
+rd1 = %Round{
+  rest: 60,
+  workout_id: 1,
+  sets: [
+    %Set{
+      reps: 5,
+      weight: 100,
+      exercise: ex1
+    },
+    %Set{
+      reps: 6,
+      weight: 90,
+      exercise: ex1
+    },
+    %Set{
+      reps: 8,
+      weight: 80,
+      exercise: ex1
+    }
+  ]
+}
+
+rd2 = %Round{
+  rest: 60,
+  workout_id: 2,
+  sets: [
+    %Set{
+      reps: 2,
+      weight: 10,
+      exercise: ex3
+    },
+    %Set{
+      reps: 6,
+      weight: 12,
+      exercise: ex3
+    },
+    %Set{
+      reps: 8,
+      weight: 14,
+      exercise: ex3
+    }
+  ]
+}
+
+#
 # WORKOUT
 #
 
 wk1 =
-  %Workout{}
-  |> Workout.changeset(%{
+  %Workout{
     name: "Chest Day",
-    start_date: DateTime.from_naive!(~N[2019-03-21 09:00:00], "Etc/UTC"),
+    start_date: ~D[2023-03-21],
     notes: "I felt really good today",
-    rounds: [
-      %Round{
-        rest: 60,
-        sets: [
-          %Set{
-            reps: 5,
-            weight: 100,
-            exercise: ex1
-          },
-          %Set{
-            reps: 6,
-            weight: 90,
-            exercise: ex1
-          },
-          %Set{
-            reps: 8,
-            weight: 80,
-            exercise: ex1
-          }
-        ]
-      }
-    ]
-  })
+    rounds: [rd1]
+  }
   |> Repo.insert!()
 
-#
-# ROUND
-#
+wk1 =
+  %Workout{
+    name: "Fran",
+    start_date: ~D[2023-03-23],
+    notes: "This is a beast",
+    rounds: [rd2]
+  }
+  |> Repo.insert!()
 
-# rd1 =
-#   %Round{}
-#   |> Round.changeset(%{
-#     rest: 60,
-#     workout: wk1
-#     # sets: [set1, set2, set3]
-#   })
-#   |> Repo.insert!()
+wk1 =
+  %Workout{
+    name: "Multiple Rounds",
+    start_date: ~D[2023-03-22],
+    notes: "Didn't fancy it",
+    rounds: [rd1, rd2]
+  }
+  |> Repo.insert!()
 
 #
 # SETS

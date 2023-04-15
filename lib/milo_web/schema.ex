@@ -1,5 +1,6 @@
 defmodule MiloWeb.Schema do
   use Absinthe.Schema
+  alias MiloWeb.Resolvers
   import_types(Absinthe.Type.Custom)
 
   query do
@@ -16,9 +17,21 @@ defmodule MiloWeb.Schema do
     field :exercises, list_of(:exercise) do
       arg(:limit, :integer, default_value: 10)
 
-      resolve(fn _, args, _ ->
-        {:ok, Milo.Workouts.list_exercises(args)}
-      end)
+      resolve(&Resolvers.Workouts.exercises/3)
+    end
+
+    @desc "Get a workout by its id"
+    field :workout, :workout do
+      arg(:id, non_null(:id))
+
+      resolve(&Resolvers.Workouts.workout/3)
+    end
+
+    @desc "Get a round by its id"
+    field :round, :round do
+      arg(:id, non_null(:id))
+
+      resolve(&Resolvers.Workouts.round/3)
     end
   end
 
@@ -29,6 +42,17 @@ defmodule MiloWeb.Schema do
 
       resolve(fn args, _ ->
         {:ok, Milo.Workouts.create_exercise(args)}
+      end)
+    end
+
+    field :create_set, :set do
+      arg(:exercise_id, non_null(:id))
+      arg(:round_id, non_null(:id))
+      arg(:reps, non_null(:integer))
+      arg(:weight, non_null(:integer))
+
+      resolve(fn _, args, _ ->
+        {:ok, Milo.Workouts.create_set(args)}
       end)
     end
   end
@@ -57,7 +81,10 @@ defmodule MiloWeb.Schema do
     field :name, non_null(:string)
     field :start_date, non_null(:date)
     field :notes, non_null(:string)
-    field :rounds, list_of(:round)
+
+    field :rounds, list_of(:round) do
+      resolve(&Resolvers.Workouts.rounds_for_workout/3)
+    end
   end
 
   @desc "A User"
