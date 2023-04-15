@@ -1,5 +1,4 @@
 defmodule MiloWeb.Resolvers.Workouts do
-  alias Milo.Workouts.{Exercise, Set, Round, Workout}
   alias Milo.Workouts
 
   def exercise(_, %{id: id}, _) do
@@ -24,9 +23,5 @@ defmodule MiloWeb.Resolvers.Workouts do
 
   def workouts(_, _args, _) do
     {:ok, Workouts.list_workouts()}
-  end
-
-  def rounds_for_workout(parent, _, _) do
-    {:ok, Workouts.rounds_for_workout(parent)}
   end
 end

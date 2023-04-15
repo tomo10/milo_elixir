@@ -49,7 +49,7 @@ defmodule Milo.MixProject do
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5"},
       {:pbkdf2_elixir, "2.1.0"},
-      {:dataloader, "~> 1.0.10"}
+      {:dataloader, "~> 1.0.0"}
     ]
   end
 

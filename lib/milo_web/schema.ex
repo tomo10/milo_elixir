@@ -2,6 +2,11 @@ defmodule MiloWeb.Schema do
   use Absinthe.Schema
   alias MiloWeb.Resolvers
   import_types(Absinthe.Type.Custom)
+  import Absinthe.Resolution.Helpers, only: [dataloader: 1, dataloader: 3]
+
+  # TODO
+  # Add query for getting all workouts
+  # Add dataloader to get all sets for a round
 
   query do
     @desc "Get an exercise by its id"
@@ -82,14 +87,24 @@ defmodule MiloWeb.Schema do
     field :start_date, non_null(:date)
     field :notes, non_null(:string)
 
-    field :rounds, list_of(:round) do
-      resolve(&Resolvers.Workouts.rounds_for_workout/3)
-    end
+    field :rounds, list_of(:round), resolve: dataloader(Workouts)
   end
 
   @desc "A User"
   object :user do
     field :name, non_null(:string)
     field :workouts, list_of(:workout)
+  end
+
+  def context(ctx) do
+    source = Dataloader.Ecto.new(Milo.Repo)
+
+    loader = Dataloader.new() |> Dataloader.add_source(Workouts, source)
+
+    Map.put(ctx, :loader, loader)
+  end
+
+  def plugins do
+    [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
   end
 end
