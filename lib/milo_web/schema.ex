@@ -2,10 +2,9 @@ defmodule MiloWeb.Schema do
   use Absinthe.Schema
   alias MiloWeb.Resolvers
   import_types(Absinthe.Type.Custom)
-  import Absinthe.Resolution.Helpers, only: [dataloader: 1, dataloader: 3]
+  import Absinthe.Resolution.Helpers, only: [dataloader: 3, dataloader: 1]
 
   # TODO
-  # Add query for getting all workouts
   # Add dataloader to get all sets for a round
 
   query do
@@ -13,9 +12,7 @@ defmodule MiloWeb.Schema do
     field :exercise, :exercise do
       arg(:id, non_null(:id))
 
-      resolve(fn _, %{id: id}, _ ->
-        {:ok, Milo.Workouts.get_exercise!(id)}
-      end)
+      resolve(&Resolvers.Workouts.exercise/3)
     end
 
     @desc "Get all exercises"
@@ -25,11 +22,25 @@ defmodule MiloWeb.Schema do
       resolve(&Resolvers.Workouts.exercises/3)
     end
 
+    @desc "Get a set by its id"
+    field :set, :set do
+      arg(:id, non_null(:id))
+
+      resolve(&Resolvers.Workouts.set/3)
+    end
+
     @desc "Get a workout by its id"
     field :workout, :workout do
       arg(:id, non_null(:id))
 
       resolve(&Resolvers.Workouts.workout/3)
+    end
+
+    @desc "Get all workouts"
+    field :workouts, list_of(:workout) do
+      arg(:limit, :integer, default_value: 10)
+
+      resolve(&Resolvers.Workouts.workouts/3)
     end
 
     @desc "Get a round by its id"
@@ -39,6 +50,8 @@ defmodule MiloWeb.Schema do
       resolve(&Resolvers.Workouts.round/3)
     end
   end
+
+  # MUTATIONS
 
   mutation do
     field :create_exercise, :exercise do
@@ -62,23 +75,29 @@ defmodule MiloWeb.Schema do
     end
   end
 
+  # MODELS
+
   @desc "An Exercise"
   object :exercise do
     field :name, non_null(:string)
     field :body_part, non_null(:string)
-    field :sets, list_of(:set)
+
+    field :sets, list_of(:set), resolve: dataloader(Workouts)
   end
 
   @desc "A Set"
   object :set do
     field :weight, non_null(:integer)
     field :reps, non_null(:integer)
+
+    # field :exercie
   end
 
   @desc "A Round"
   object :round do
     field :rest, non_null(:integer)
-    field :sets, list_of(:set)
+
+    field :sets, list_of(:set), resolve: dataloader(Workouts)
   end
 
   @desc "A Workout"
@@ -95,6 +114,8 @@ defmodule MiloWeb.Schema do
     field :name, non_null(:string)
     field :workouts, list_of(:workout)
   end
+
+  # CONTEXT
 
   def context(ctx) do
     source = Dataloader.Ecto.new(Milo.Repo)

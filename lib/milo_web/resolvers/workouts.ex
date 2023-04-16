@@ -13,15 +13,19 @@ defmodule MiloWeb.Resolvers.Workouts do
     {:ok, Workouts.get_round!(id)}
   end
 
-  def sets_for_round(parent, _, _) do
-    {:ok, Workouts.sets_for_round(parent)}
+  def set(_, %{id: id}, _) do
+    {:ok, Workouts.get_set!(id)}
   end
+
+  # def sets(_, _args, _) do
+  #   {:ok, Workouts.list_sets()}
+  # end
 
   def workout(_, %{id: id}, _) do
     {:ok, Workouts.get_workout!(id)}
   end
 
-  def workouts(_, _args, _) do
-    {:ok, Workouts.list_workouts()}
+  def workouts(_, args, _) do
+    {:ok, Workouts.list_workouts(args)}
   end
 end

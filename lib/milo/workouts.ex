@@ -36,8 +36,18 @@ defmodule Milo.Workouts do
 
   """
 
-  def list_workouts do
-    Repo.all(Workout)
+  def list_workouts(criteria) do
+    query = from(w in Workout)
+
+    Enum.reduce(criteria, query, fn
+      {:limit, limit}, query ->
+        from w in query, limit: ^limit
+    end)
+    |> Repo.all()
+  end
+
+  def list_sets do
+    Repo.all(Set)
   end
 
   @doc """
@@ -131,17 +141,5 @@ defmodule Milo.Workouts do
   """
   def change_exercise(%Exercise{} = exercise, attrs \\ %{}) do
     Exercise.changeset(exercise, attrs)
-  end
-
-  def rounds_for_workout(%Workout{} = workout) do
-    Round
-    |> where(workout_id: ^workout.id)
-    |> Repo.all()
-  end
-
-  def sets_for_round(%Round{} = round) do
-    Set
-    |> where(round_id: ^round.id)
-    |> Repo.all()
   end
 end
