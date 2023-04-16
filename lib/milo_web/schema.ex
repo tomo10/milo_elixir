@@ -90,7 +90,7 @@ defmodule MiloWeb.Schema do
     field :weight, non_null(:integer)
     field :reps, non_null(:integer)
 
-    # field :exercie
+    field :exercise, non_null(:exercise), resolve: dataloader(Workouts)
   end
 
   @desc "A Round"
