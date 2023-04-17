@@ -1,4 +1,4 @@
-defmodule Getaways.Accounts do
+defmodule Milo.Accounts do
   @moduledoc """
   The Accounts context: public interface for account functionality.
   """

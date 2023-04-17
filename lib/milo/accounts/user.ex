@@ -10,7 +10,7 @@ defmodule Milo.Accounts.User do
 
     has_many :bookings, Milo.Gyms.Booking
     has_many :reviews, Milo.Gyms.Review
-    # has_many :workouts, Milo.Workouts.Workout
+    has_many :workouts, Milo.Workouts.Workout
 
     timestamps()
   end

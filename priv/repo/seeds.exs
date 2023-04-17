@@ -58,20 +58,6 @@ ex1 =
   |> Exercise.changeset(%{
     name: "Bench Press",
     body_part: "Chest"
-    # sets: [
-    #   %Set{
-    #     reps: 5,
-    #     weight: 100
-    #   },
-    #   %Set{
-    #     reps: 6,
-    #     weight: 90
-    #   },
-    #   %Set{
-    #     reps: 8,
-    #     weight: 80
-    #   }
-    # ]
   })
   |> Repo.insert!()
 
@@ -145,6 +131,7 @@ rd2 = %Round{
 
 wk1 =
   %Workout{
+    user: tomo,
     name: "Chest Day",
     start_date: ~D[2023-03-21],
     notes: "I felt really good today",
@@ -152,8 +139,9 @@ wk1 =
   }
   |> Repo.insert!()
 
-wk1 =
+wk2 =
   %Workout{
+    user: nicole,
     name: "Fran",
     start_date: ~D[2023-03-23],
     notes: "This is a beast",
@@ -163,43 +151,10 @@ wk1 =
 
 wk1 =
   %Workout{
+    user: tomo,
     name: "Multiple Rounds",
     start_date: ~D[2023-03-22],
     notes: "Didn't fancy it",
     rounds: [rd1, rd2]
   }
   |> Repo.insert!()
-
-#
-# SETS
-#
-
-# set1 =
-#   %Set{}
-#   |> Set.changeset(%{
-#     reps: 5,
-#     weight: 100,
-#     exercise_id: ex1.id,
-#     round_id: 1
-#   })
-#   |> Repo.insert!()
-
-# set2 =
-#   %Set{}
-#   |> Set.changeset(%{
-#     reps: 6,
-#     weight: 90,
-#     exercise_id: ex1.id,
-#     round_id: 1
-#   })
-#   |> Repo.insert!()
-
-# set3 =
-#   %Set{}
-#   |> Set.changeset(%{
-#     reps: 8,
-#     weight: 80,
-#     exercise_id: ex1.id,
-#     round_id: 1
-#   })
-#   |> Repo.insert!()

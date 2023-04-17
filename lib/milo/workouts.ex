@@ -142,4 +142,23 @@ defmodule Milo.Workouts do
   def change_exercise(%Exercise{} = exercise, attrs \\ %{}) do
     Exercise.changeset(exercise, attrs)
   end
+
+  # dataloader functions. These essetnailly allow you fine grain control over what data is loaded through dataloader
+  def datasource() do
+    Dataloader.Ecto.new(Repo, query: &query/2)
+  end
+
+  # this is an example from getaways to query booking by reserved state. we could apply to ex and bodyParts say
+  # 4 min of vid 13. Adding scope: :place means that query would only apply to the place model dataloader query in shcema
+  # scope naming is arbitrary
+
+  # def query(Exercise, %{scope: :place}) do
+  #   Exercise
+  #   |> where(state: "reserved")
+  #   |> order_by([desc: :start_date])
+  # end
+
+  def query(queryable, _) do
+    queryable
+  end
 end

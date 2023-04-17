@@ -7,7 +7,7 @@ defmodule Milo.Workouts.Workout do
     field :start_date, :date
     field :notes, :string
 
-    # belongs_to :user, Milo.Accounts.User
+    belongs_to :user, Milo.Accounts.User
     has_many :rounds, Milo.Workouts.Round, foreign_key: :workout_id
 
     timestamps()

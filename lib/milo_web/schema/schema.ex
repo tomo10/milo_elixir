@@ -5,9 +5,14 @@ defmodule MiloWeb.Schema do
   import Absinthe.Resolution.Helpers, only: [dataloader: 3, dataloader: 1]
 
   # TODO
-  # Add dataloader to get all sets for a round
+  # think will hve to do sign in and sign up mutations before can query user
 
   query do
+    @desc "Ger a user by their id"
+    field :me, :user do
+      resolve(&Resolvers.Accounts.me/3)
+    end
+
     @desc "Get an exercise by its id"
     field :exercise, :exercise do
       arg(:id, non_null(:id))
@@ -111,16 +116,21 @@ defmodule MiloWeb.Schema do
 
   @desc "A User"
   object :user do
-    field :name, non_null(:string)
+    field :username, non_null(:string)
+    field :email, non_null(:string)
     field :workouts, list_of(:workout)
   end
 
   # CONTEXT
 
   def context(ctx) do
-    source = Dataloader.Ecto.new(Milo.Repo)
+    ctx = Map.put(ctx, :cuurent_user, Milo.Accounts.get_user(1))
 
-    loader = Dataloader.new() |> Dataloader.add_source(Workouts, source)
+    loader =
+      Dataloader.new()
+      |> Dataloader.add_source(Workouts, Milo.Workouts.datasource())
+
+    # |> Dataloader.add_source(Accounts, Milo.Accounts.datasource())
 
     Map.put(ctx, :loader, loader)
   end
