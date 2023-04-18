@@ -29,10 +29,6 @@ defmodule MiloWeb.Resolvers.Workouts do
     end
   end
 
-  # def sets(_, _args, _) do
-  #   {:ok, Workouts.list_sets()}
-  # end
-
   def workout(_, %{id: id}, _) do
     {:ok, Workouts.get_workout!(id)}
   end
