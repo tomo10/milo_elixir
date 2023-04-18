@@ -1,4 +1,5 @@
 defmodule MiloWeb.Resolvers.Workouts do
+  alias MiloWeb.Schema.ChangesetErrors
   alias Milo.Workouts
 
   def exercise(_, %{id: id}, _) do
@@ -15,6 +16,17 @@ defmodule MiloWeb.Resolvers.Workouts do
 
   def set(_, %{id: id}, _) do
     {:ok, Workouts.get_set!(id)}
+  end
+
+  def create_set(_, args, _) do
+    case Workouts.create_set(args) do
+      {:error, changeset} ->
+        {:error,
+         message: "Could not create set", details: ChangesetErrors.error_details(changeset)}
+
+      {:ok, set} ->
+        {:ok, set}
+    end
   end
 
   # def sets(_, _args, _) do

@@ -74,9 +74,7 @@ defmodule MiloWeb.Schema do
       arg(:reps, non_null(:integer))
       arg(:weight, non_null(:integer))
 
-      resolve(fn _, args, _ ->
-        {:ok, Milo.Workouts.create_set(args)}
-      end)
+      resolve(&Resolvers.Workouts.create_set/3)
     end
   end
 

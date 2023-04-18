@@ -18,5 +18,7 @@ defmodule Milo.Workouts.Set do
     set
     |> cast(attrs, required_fields)
     |> validate_required(required_fields)
+    |> assoc_constraint(:exercise)
+    |> assoc_constraint(:round)
   end
 end
