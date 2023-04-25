@@ -36,4 +36,15 @@ defmodule MiloWeb.Resolvers.Workouts do
   def workouts(_, args, _) do
     {:ok, Workouts.list_workouts(args)}
   end
+
+  def create_workout(_, args, _) do
+    case Workouts.create_workout(args) do
+      {:error, changeset} ->
+        {:error,
+         message: "Could not create workout", details: ChangesetErrors.error_details(changeset)}
+
+      {:ok, workout} ->
+        {:ok, workout}
+    end
+  end
 end

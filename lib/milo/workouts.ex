@@ -100,6 +100,14 @@ defmodule Milo.Workouts do
     |> Repo.insert()
   end
 
+  # def create_workout(attrs) do
+  #   IO.inspect(attrs, label: "create_workout attrs")
+
+  #   %Workout{}
+  #   |> Workout.changeset(attrs)
+  #   |> Repo.insert()
+  # end
+
   @doc """
   Updates an exercise.
 

@@ -5,7 +5,8 @@ defmodule MiloWeb.Schema do
   import Absinthe.Resolution.Helpers, only: [dataloader: 3, dataloader: 1]
 
   # TODO
-  # think will hve to do sign in and sign up mutations before can query user
+  # sign in and sign up mutations before can query user
+  # then carry on with createWorkout mutation
 
   query do
     @desc "Ger a user by their id"
@@ -76,6 +77,31 @@ defmodule MiloWeb.Schema do
 
       resolve(&Resolvers.Workouts.create_set/3)
     end
+
+    field :create_workout, :workout do
+      arg(:name, non_null(:string))
+      arg(:start_date, non_null(:date))
+      arg(:notes, non_null(:string))
+
+      resolve(&Resolvers.Workouts.create_workout/3)
+    end
+
+    @desc "Create a user account"
+    field :signup, :session do
+      arg(:username, non_null(:string))
+      arg(:email, non_null(:string))
+      arg(:password, non_null(:string))
+
+      resolve(&Resolvers.Accounts.signup/3)
+    end
+
+    @desf "Sign in to a user account"
+    field :signin, :session do
+      arg(:username, non_null(:string))
+      arg(:password, non_null(:string))
+
+      resolve(&Resolvers.Accounts.signin/3)
+    end
   end
 
   # MODELS
@@ -117,6 +143,13 @@ defmodule MiloWeb.Schema do
     field :username, non_null(:string)
     field :email, non_null(:string)
     field :workouts, list_of(:workout)
+  end
+
+  # NB schema objects dont need to tally up with contexts. ie sesssion doesnt
+  @desc "A session"
+  object :session do
+    field :user, non_null(:user)
+    field :token, non_null(:string)
   end
 
   # CONTEXT
