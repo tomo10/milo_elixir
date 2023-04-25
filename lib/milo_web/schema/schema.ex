@@ -1,6 +1,7 @@
 defmodule MiloWeb.Schema do
   use Absinthe.Schema
   alias MiloWeb.Resolvers
+  alias MiloWeb.Schema.Middleware
   import_types(Absinthe.Type.Custom)
   import Absinthe.Resolution.Helpers, only: [dataloader: 3, dataloader: 1]
 
@@ -57,7 +58,9 @@ defmodule MiloWeb.Schema do
     end
   end
 
+  #
   # MUTATIONS
+  #
 
   mutation do
     field :create_exercise, :exercise do
@@ -83,6 +86,7 @@ defmodule MiloWeb.Schema do
       arg(:start_date, non_null(:date))
       arg(:notes, non_null(:string))
 
+      middleware(Middleware.Authenticate)
       resolve(&Resolvers.Workouts.create_workout/3)
     end
 
@@ -104,7 +108,9 @@ defmodule MiloWeb.Schema do
     end
   end
 
+  #
   # MODELS
+  #
 
   @desc "An Exercise"
   object :exercise do
