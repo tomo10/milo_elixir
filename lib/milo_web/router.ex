@@ -7,6 +7,7 @@ defmodule MiloWeb.Router do
   end
 
   # this stuff explained 7.00 min of GQL prag prog video
+  # or at 2 mins of video 16
   scope "/api", MiloWeb do
     pipe_through :api
     forward("/", Absinthe.Plug, schema: MiloWeb.Schema)

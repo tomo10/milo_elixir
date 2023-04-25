@@ -8,6 +8,7 @@ defmodule Milo.Workouts do
   alias Milo.Repo
 
   alias Milo.Workouts.{Exercise, Workout, Set}
+  alias Milo.Accounts.{User}
 
   @doc """
   Returns a list of exercises matching the given `criteria`.
@@ -100,13 +101,14 @@ defmodule Milo.Workouts do
     |> Repo.insert()
   end
 
-  # def create_workout(attrs) do
-  #   IO.inspect(attrs, label: "create_workout attrs")
+  def create_workout(%User{} = user, attrs) do
+    IO.inspect(attrs, label: "create_workout attrs")
 
-  #   %Workout{}
-  #   |> Workout.changeset(attrs)
-  #   |> Repo.insert()
-  # end
+    %Workout{}
+    |> Workout.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:user, user)
+    |> Repo.insert()
+  end
 
   @doc """
   Updates an exercise.

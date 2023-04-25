@@ -155,7 +155,7 @@ defmodule MiloWeb.Schema do
   # CONTEXT
 
   def context(ctx) do
-    ctx = Map.put(ctx, :cuurent_user, Milo.Accounts.get_user(1))
+    IO.inspect(ctx, label: "CTX")
 
     loader =
       Dataloader.new()
