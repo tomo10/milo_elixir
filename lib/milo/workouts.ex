@@ -169,6 +169,10 @@ defmodule Milo.Workouts do
     Dataloader.Ecto.new(Repo, query: &query/2)
   end
 
+  def query(queryable, _) do
+    queryable
+  end
+
   # this is an example from getaways to query booking by reserved state. we could apply to ex and bodyParts say
   # 4 min of vid 13. Adding scope: :place means that query would only apply to the place model dataloader query in shcema
   # scope naming is arbitrary
@@ -178,8 +182,4 @@ defmodule Milo.Workouts do
   #   |> where(state: "reserved")
   #   |> order_by([desc: :start_date])
   # end
-
-  def query(queryable, _) do
-    queryable
-  end
 end

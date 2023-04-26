@@ -6,7 +6,7 @@ defmodule MiloWeb.Schema.Schema do
   import Absinthe.Resolution.Helpers, only: [dataloader: 3, dataloader: 1]
 
   # TODO
-  # sign in and sign up mutations before can query user
+  # add association to user so can query user workouts
   # then carry on with createWorkout mutation
 
   query do
@@ -83,7 +83,6 @@ defmodule MiloWeb.Schema.Schema do
 
     field :create_round, :round do
       arg(:workout_id, non_null(:id))
-      # arg(:round_number, non_null(:integer))
       arg(:data, non_null(:set_input))
 
       resolve(&Resolvers.Workouts.create_round/3)
@@ -168,7 +167,9 @@ defmodule MiloWeb.Schema.Schema do
   object :user do
     field :username, non_null(:string)
     field :email, non_null(:string)
-    field :workouts, list_of(:workout)
+
+    field :workouts, list_of(:workout),
+      resolve: dataloader(Workouts, :workouts, args: %{scope: :user})
   end
 
   # NB schema objects dont need to tally up with contexts. ie sesssion doesnt

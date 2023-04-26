@@ -12,7 +12,7 @@ defmodule MiloWeb.Plugs.SetCurrentUser do
   defp built_context(conn) do
     with ["Bearer " <> token] <- get_req_header(conn, "authorization"),
          {:ok, %{id: id}} <- MiloWeb.AuthToken.verify(token),
-         %{} = user <- Milo.Accounts.get_user!(id) do
+         %{} = user <- Milo.Accounts.get_user(id) do
       %{current_user: user}
     else
       _ -> %{}
