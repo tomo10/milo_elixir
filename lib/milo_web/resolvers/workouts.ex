@@ -48,9 +48,13 @@ defmodule MiloWeb.Resolvers.Workouts do
     {:ok, Workouts.list_workouts(args)}
   end
 
+  @doc """
+    Creates a workout and all its rounds and sets
+  """
   def create_workout(_, args, %{context: %{current_user: user}}) do
-    # here you would split all the args into the different units. eg workout, round, set
-    IO.inspect(args, label: "ARGS FOR MUTATION CREATE WORKOUT")
+    # round needs a workout to exist
+    # set needs a round to exist
+    # so we need to create the workout first, then the rounds, then the sets
 
     case Workouts.create_workout(user, args) do
       {:error, changeset} ->
@@ -58,20 +62,17 @@ defmodule MiloWeb.Resolvers.Workouts do
          message: "Could not create workout", details: ChangesetErrors.error_details(changeset)}
 
       {:ok, workout} ->
+        create_rounds(args.rounds, workout)
         {:ok, workout}
     end
   end
 
-  # def create_workout_rounds_sets(_, args, _) do
-  #   IO.inspect(args, label: "ARGS FOR MUTATION CREATE WOERKOUT ROUNDS SETS")
+  def create_rounds(rounds, workout) do
+    Enum.map(rounds, fn round -> Map.put(round, :workout_id, workout_id) end)
+    |> Enum.map(fn round -> Workouts.create_round(round) end)
+  end
 
-  #   case Workouts.create_workout_rounds_sets(args) do
-  #     {:error, changeset} ->
-  #       {:error,
-  #        message: "Could not create workout", details: ChangesetErrors.error_details(changeset)}
-
-  #     {:ok, workout} ->
-  #       {:ok, workout}
-  #   end
-  # end
+  def create_sets(rounds) do
+    rounds
+  end
 end
