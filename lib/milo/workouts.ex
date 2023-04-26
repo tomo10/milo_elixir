@@ -97,7 +97,14 @@ defmodule Milo.Workouts do
     %Set{}
     |> Set.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:exercise, Milo.Workouts.get_exercise!(attrs.exercise_id))
-    |> Ecto.Changeset.put_assoc(:round, Milo.Workouts.get_round!(attrs.round_id))
+    # |> Ecto.Changeset.put_assoc(:round, Milo.Workouts.get_round!(attrs.round_id))
+    |> Repo.insert()
+  end
+
+  def create_round(attrs) do
+    %Round{}
+    |> Round.changeset(attrs)
+    # |> Ecto.Changeset.put_assoc(:workout, Milo.Workouts.get_workout!(attrs.workout_id))
     |> Repo.insert()
   end
 

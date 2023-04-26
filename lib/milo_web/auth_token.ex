@@ -10,7 +10,7 @@ defmodule MiloWeb.AuthToken do
   @doc """
   Decodes the orig data from the gien token and verifies its integrity
   """
-  def veryify(token) do
+  def verify(token) do
     Phoenix.Token.verify(MiloWeb.Endpoint, @user_salt, token, max_age: 365 * 24 * 60 * 60)
   end
 end

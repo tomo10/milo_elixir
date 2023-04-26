@@ -1,4 +1,4 @@
-defmodule MiloWeb.Schema do
+defmodule MiloWeb.Schema.Schema do
   use Absinthe.Schema
   alias MiloWeb.Resolvers
   alias MiloWeb.Schema.Middleware
@@ -10,7 +10,7 @@ defmodule MiloWeb.Schema do
   # then carry on with createWorkout mutation
 
   query do
-    @desc "Ger a user by their id"
+    @desc "Get the current user"
     field :me, :user do
       resolve(&Resolvers.Accounts.me/3)
     end
@@ -81,14 +81,34 @@ defmodule MiloWeb.Schema do
       resolve(&Resolvers.Workouts.create_set/3)
     end
 
+    field :create_round, :round do
+      arg(:workout_id, non_null(:id))
+      # arg(:round_number, non_null(:integer))
+      arg(:data, non_null(:set_input))
+
+      resolve(&Resolvers.Workouts.create_round/3)
+    end
+
     field :create_workout, :workout do
       arg(:name, non_null(:string))
       arg(:start_date, non_null(:date))
       arg(:notes, non_null(:string))
+      arg(:data, non_null(:round_input))
 
       middleware(Middleware.Authenticate)
       resolve(&Resolvers.Workouts.create_workout/3)
     end
+
+    # @desc "Create a new workout, rounds, and sets"
+    # field :createWorkoutRoundsSets, :workout do
+    #   arg(:name, non_null(:string))
+    #   arg(:start_date, non_null(:date))
+    #   arg(:notes, non_null(:string))
+    #   arg(:rounds_data, non_null(:round_input))
+    #   arg(:sets_data, non_null(:set_input))
+
+    #   resolve(&Resolvers.Workouts.create_workout_rounds_sets/3)
+    # end
 
     @desc "Create a user account"
     field :signup, :session do
@@ -158,7 +178,24 @@ defmodule MiloWeb.Schema do
     field :token, non_null(:string)
   end
 
+  #
+  # INPUT TYPES
+  #
+
+  input_object :round_input do
+    field :rest, non_null(:integer)
+    field :sets, list_of(:set_input)
+  end
+
+  input_object :set_input do
+    field :exercise_id, non_null(:id)
+    field :reps, non_null(:integer)
+    field :weight, non_null(:integer)
+  end
+
+  #
   # CONTEXT
+  #
 
   def context(ctx) do
     IO.inspect(ctx, label: "CTX")
@@ -166,8 +203,7 @@ defmodule MiloWeb.Schema do
     loader =
       Dataloader.new()
       |> Dataloader.add_source(Workouts, Milo.Workouts.datasource())
-
-    # |> Dataloader.add_source(Accounts, Milo.Accounts.datasource())
+      |> Dataloader.add_source(Accounts, Milo.Accounts.datasource())
 
     Map.put(ctx, :loader, loader)
   end
