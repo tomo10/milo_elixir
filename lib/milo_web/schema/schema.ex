@@ -73,22 +73,22 @@ defmodule MiloWeb.Schema.Schema do
 
     # don't really need this mutation or the create round mutation
     # as all handled in create workout resolver
-    field :create_set, :set do
-      arg(:exercise_id, non_null(:id))
-      arg(:round_id, non_null(:id))
-      arg(:reps, non_null(:integer))
-      arg(:weight, non_null(:integer))
+    # field :create_set, :set do
+    #   arg(:exercise_id, non_null(:id))
+    #   arg(:round_id, non_null(:id))
+    #   arg(:reps, non_null(:integer))
+    #   arg(:weight, non_null(:integer))
 
-      resolve(&Resolvers.Workouts.create_set/3)
-    end
+    #   resolve(&Resolvers.Workouts.create_set/3)
+    # end
 
-    field :create_round, :round do
-      arg(:workout_id, non_null(:id))
-      arg(:rest, non_null(:integer))
-      arg(:sets, list_of(:set_input))
+    # field :create_round, :round do
+    #   arg(:workout_id, non_null(:id))
+    #   arg(:rest, non_null(:integer))
+    #   arg(:sets, list_of(:set_input))
 
-      resolve(&Resolvers.Workouts.create_round/3)
-    end
+    #   resolve(&Resolvers.Workouts.create_round/3)
+    # end
 
     field :create_workout, :workout do
       arg(:name, non_null(:string))

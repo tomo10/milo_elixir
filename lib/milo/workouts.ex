@@ -91,25 +91,27 @@ defmodule Milo.Workouts do
     |> Repo.insert()
   end
 
-  def create_set(attrs, %Exercise{} = exercise, %Round{} = round) do
-    IO.inspect(attrs, label: "create_set attrs")
+  def create_set(attrs, %Round{} = round) do
+    IO.inspect(attrs, label: "create_set attrs::::")
 
     %Set{}
     |> Set.changeset(attrs)
-    |> Ecto.Changeset.put_assoc(:exercise, exercise)
     |> Ecto.Changeset.put_assoc(:round, round)
+    |> Ecto.Changeset.put_assoc(:exercise, get_exercise!(attrs.exercise_id))
     |> Repo.insert()
   end
 
-  def create_round(attrs) do
+  def create_round(attrs, workout) do
+    IO.inspect(attrs, label: "create_round attrs::::")
+
     %Round{}
     |> Round.changeset(attrs)
-    # |> Ecto.Changeset.put_assoc(:workout, Milo.Workouts.get_workout!(attrs.workout_id))
+    |> Ecto.Changeset.put_assoc(:workout, workout)
     |> Repo.insert()
   end
 
   def create_workout(%User{} = user, attrs) do
-    IO.inspect(attrs, label: "create_workout attrs")
+    IO.inspect(attrs, label: "create_workout attrs::::")
 
     %Workout{}
     |> Workout.changeset(attrs)
