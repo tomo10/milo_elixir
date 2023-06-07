@@ -51,6 +51,7 @@ carla =
 
 #
 # EXERCISES
+# Need to add equipment field to exercises
 #
 
 ex1 =
@@ -74,6 +75,134 @@ ex3 =
   |> Exercise.changeset(%{
     name: "Military Press",
     body_part: "Deltoids"
+  })
+  |> Repo.insert!()
+
+ex4 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Squat",
+    body_part: "Legs"
+  })
+  |> Repo.insert!()
+
+ex5 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Bicep Curls",
+    body_part: "Arms"
+  })
+  |> Repo.insert!()
+
+ex6 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Lunges",
+    body_part: "Legs"
+  })
+  |> Repo.insert!()
+
+ex7 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Pull-ups",
+    body_part: "Back"
+  })
+  |> Repo.insert!()
+
+ex8 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Tricep Dips",
+    body_part: "Arms"
+  })
+  |> Repo.insert!()
+
+ex9 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Shoulder Press",
+    body_part: "Deltoids"
+  })
+  |> Repo.insert!()
+
+ex10 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Hamstring Curls",
+    body_part: "Legs"
+  })
+  |> Repo.insert!()
+
+ex11 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Chest Flyes",
+    body_part: "Chest"
+  })
+  |> Repo.insert!()
+
+ex12 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Plank",
+    body_part: "Core"
+  })
+  |> Repo.insert!()
+
+ex13 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Dumbbell Rows",
+    body_part: "Back"
+  })
+  |> Repo.insert!()
+
+ex14 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Leg Press",
+    body_part: "Legs"
+  })
+  |> Repo.insert!()
+
+ex15 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Barbell Rows",
+    body_part: "Back"
+  })
+  |> Repo.insert!()
+
+ex16 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Incline Bench Press",
+    body_part: "Chest"
+  })
+  |> Repo.insert!()
+
+ex17 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Lateral Raises",
+    body_part: "Deltoids"
+  })
+  |> Repo.insert!()
+
+ex18 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Russian Twists",
+    body_part: "Core"
+  })
+  |> Repo.insert!()
+
+ex19 =
+  %Exercise{}
+  |> Exercise.changeset(%{
+    name: "Leg Extensions",
+    body_part: "Legs"
   })
   |> Repo.insert!()
 
@@ -149,7 +278,7 @@ wk2 =
   }
   |> Repo.insert!()
 
-wk1 =
+wk3 =
   %Workout{
     user: tomo,
     name: "Multiple Rounds",

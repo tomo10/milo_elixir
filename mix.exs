@@ -50,6 +50,7 @@ defmodule Milo.MixProject do
       {:absinthe_plug, "~> 1.5"},
       {:pbkdf2_elixir, "2.1.0"},
       {:dataloader, "~> 1.0.0"}
+      # {:cors_plug, "~> 3.0"}
     ]
   end
 

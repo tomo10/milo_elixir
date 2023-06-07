@@ -9,26 +9,26 @@ defmodule MiloWeb.Router do
   # this stuff explained 7.00 min of GQL prag prog video
   # or at 2 mins of video 16
 
-  scope "/api", MiloWeb do
-    pipe_through :api
-    forward("/", Absinthe.Plug, schema: MiloWeb.Schema.Schema)
-  end
+  # scope "/api", MiloWeb do
+  #   pipe_through :api
+  #   forward("/", Absinthe.Plug, schema: MiloWeb.Schema.Schema)
+  # end
 
   scope "/gql" do
     pipe_through :api
     forward "/GraphiQL", Absinthe.Plug.GraphiQL, schema: MiloWeb.Schema.Schema
   end
 
-  # scope "/" do
-  #   pipe_through :api
+  scope "/" do
+    pipe_through :api
 
-  #   forward("/api", Absinthe.Plug, schema: MiloWeb.Schema.Schemas)
+    forward("/api", Absinthe.Plug, schema: MiloWeb.Schema.Schema)
 
-  #   forward("/graphiql", Absinthe.Plug.GraphiQL,
-  #     schema: MiloWeb.Schema.Schema,
-  #     socket: MiloWeb.UserSocket
-  #   )
-  # end
+    # forward("/graphiql", Absinthe.Plug.GraphiQL,
+    #   schema: MiloWeb.Schema.Schema,
+    #   socket: MiloWeb.UserSocket
+    # )
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:milo, :dev_routes) do
