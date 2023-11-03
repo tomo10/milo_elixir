@@ -10,11 +10,11 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB_LIST: milo_dev
 
-  adminer:
-    image: adminer
-    container_name: adminer
-    ports:
-      - 8090:8080
-    environment:
-      ADMINER_DEFAULT_SERVER: postgres
+  # adminer:
+  #   image: adminer
+  #   container_name: adminer
+  #   ports:
+  #     - 8090:8080
+  #   environment:
+  #     ADMINER_DEFAULT_SERVER: postgres
       
